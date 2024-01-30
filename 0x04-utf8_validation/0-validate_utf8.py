@@ -7,11 +7,9 @@ def validUTF8(data):
     i = 0
     while i < len(data):
         byte = data[i]
-       
         if (byte & 0x80) == 0x00:
             """for 1 byte character 0xxxxxxx"""
-            i += 1
-            
+            i += 1  
         elif (byte & 0xE0) == 0xC0:
             """for 2 byte character 110xxxxx"""
             if i + 1 >= len(data) or (data[i + 1] & 0xC0) != 0x80:

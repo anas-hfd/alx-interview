@@ -2,43 +2,38 @@
 """ N Queens """
 import sys
 
+def is_safe(board, row, col):
+    """is safe"""
+    for i in range(col):
+        if board[row][i] == 1:
+            return False
 
-if len(sys.argv) > 2 or len(sys.argv) < 2:
-    print("Usage: nqueens N")
-    exit(1)
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
 
-if not sys.argv[1].isdigit():
-    print("N must be a number")
-    exit(1)
+    for i, j in zip(range(row, -1, -1), range(0, col)):
+        if board[i][j] == 1:
+            return False
 
-if int(sys.argv[1]) < 4:
-    print("N must be at least 4")
-    exit(1)
+    return True
 
-n = int(sys.argv[1])
+def solve_n_queens(n):
+    """solve func"""
+    board = [[0 for _ in range(n)] for _ in range(n)]
+    solutions = []
 
+    def backtrack(row):
+        """back track"""
+        if row == n:
+            solutions.append(board[:])
+            return
 
-def queens(n, i=0, a=[], b=[], c=[]):
-    """ a function to find possible positions """
-    if i < n:
-        for j in range(n):
-            if j not in a and i + j not in b and i - j not in c:
-                yield from queens(n, i + 1, a + [j], b + [i + j], c + [i - j])
-    else:
-        yield a
+        for col in range(n):
+            if is_safe(board, row, col):
+                board[row][col] = 1
+                backtrack(row + 1)
+                board[row][col] = 0
 
-
-def solve(n):
-    """ solve function """
-    k = []
-    i = 0
-    for solution in queens(n, 0):
-        for s in solution:
-            k.append([i, s])
-            i += 1
-        print(k)
-        k = []
-        i = 0
-
-
-solve(n)
+    backtrack(0)
+    return solutions

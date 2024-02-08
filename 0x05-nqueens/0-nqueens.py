@@ -2,6 +2,7 @@
 """ N Queens """
 import sys
 
+
 def is_safe(board, row, col, N):
     for i in range(row):
         if board[i] == col or \
@@ -9,6 +10,7 @@ def is_safe(board, row, col, N):
            board[i] + i == col + row:
             return False
     return True
+
 
 def solve_nqueens(board, row, N, solutions):
     if row == N:
@@ -20,6 +22,7 @@ def solve_nqueens(board, row, N, solutions):
             board[row] = col
             solve_nqueens(board, row + 1, N, solutions)
 
+
 def print_solutions(N):
     board = [-1] * N
     solutions = []
@@ -27,6 +30,7 @@ def print_solutions(N):
 
     for solution in solutions:
         print(solution)
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
